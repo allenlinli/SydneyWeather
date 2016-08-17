@@ -55,36 +55,23 @@ class Sydney_WeatherRawUrlTests: XCTestCase {
                 XCTAssert(dic != nil, "! object != nil")
                 
                 // MARK: test current weather data
-                guard let currentlyDic = dic?["currently"] as? [String:AnyObject] else {
-                    XCTAssert(false, "! guard let currentlyDic = dic[\"currently\"]")
-                    return
-                }
+                let currentlyDic = dic?["currently"] as? [String:AnyObject]
+                XCTAssert(currentlyDic != nil, "! guard let currentlyDic = dic[\"currently\"]")
                 
-                guard let temperature = currentlyDic["temperature"] as? Float else {
-                    XCTAssert(false, "! guard let temperature = currentlyDic[\"temperature\"]")
-                    return
-                }
-                print("temperature in Sydney: \(temperature)")
+                let temperature = currentlyDic?["temperature"] as? Float
+                XCTAssert(temperature != nil, "! guard let temperature = dic[\"temperature\"]")
                 
-                guard let summary = currentlyDic["summary"] as? String else {
-                    XCTAssert(false, "! guard let summary = currentlyDic[\"summary\"]")
-                    return
-                }
-                print("summary in Sydney: \(summary)")
+                let summary = currentlyDic?["summary"] as? String
+                XCTAssert(summary != nil, "! guard let summary = dic[\"summary\"]")
                 
-                guard let humidity = currentlyDic["humidity"] as? Float else {
-                    XCTAssert(false, "! guard let humidity = currentlyDic[\"humidity\"]")
-                    return
-                }
-                print("humidity in Sydney: \(humidity)")
+                let humidity = currentlyDic?["humidity"] as? Float
+                XCTAssert(humidity != nil, "! guard let humidity = dic[\"humidity\"]")
                 
-                guard let windSpeed = currentlyDic["windSpeed"] as? Float else {
-                    XCTAssert(false, "! guard let windSpeed = currentlyDic[\"windSpeed\"]")
-                    return
-                }
-                print("windSpeed in Sydney: \(windSpeed)")
+                let windSpeed = currentlyDic?["windSpeed"] as? Float
+                XCTAssert(windSpeed != nil, "! guard let windSpeed = dic[\"windSpeed\"]")
+                
             } catch let error as NSError {
-                XCTAssert(false, "! testRawWeatherAPI, error: \(error)")
+                XCTFail("! testRawWeatherAPI, error: \(error)")
             }
             weatherExpectation.fulfill()
         }
@@ -112,46 +99,27 @@ class Sydney_WeatherRawUrlTests: XCTestCase {
                 XCTAssert(dic != nil, "! object != nil")
                 
                 // MARK: test current weather data
-                guard let hourlyDic = dic?["hourly"] as? [String:AnyObject] else {
-                    XCTAssert(false, "! guard let hourlyDic = dic[\"hourlyDic\"]")
-                    return
-                }
+                let hourlyDic = dic?["hourly"] as? [String:AnyObject]
+                XCTAssert(hourlyDic != nil, "! let hourlyDic = dic[\"hourly\"]")
                 
-                guard let data = hourlyDic["data"] as? [AnyObject] else {
-                    XCTAssert(false, "! guard let data = currentlyDic[\"data\"]")
-                    return
-                }
+                let data = hourlyDic?["data"] as? [AnyObject]
+                XCTAssert(data != nil, "! let data = hourlyDic[\"data\"]")
                 
-                XCTAssert(data.count != 0, "! data.count != 0")
+                let firstWeather = data?.first as? [String : AnyObject]
+                XCTAssert(data != nil, "! let firstWeather = data.first")
                 
-                guard let firstWeather = data.first as? [String : AnyObject] else {
-                    XCTAssert(false, "! guard let firstWeather = data.first as? [String : AnyObject]")
-                    return
-                }
+                let temperature = firstWeather?["temperature"] as? Float
+                XCTAssert(temperature != nil, "! hourly guard let temperature = dic[\"temperature\"]")
                 
-                guard let temperature = firstWeather["temperature"] else {
-                    XCTAssert(false, "! guard let temperature = currentlyDic[\"temperature\"]")
-                    return
-                }
-                print("hourly temperature in Sydney: \(temperature)")
+                let summary = firstWeather?["summary"] as? String
+                XCTAssert(summary != nil, "! hourly guard let summary = dic[\"summary\"]")
                 
-                guard let summary = firstWeather["summary"] else {
-                    XCTAssert(false, "! guard let summary = currentlyDic[\"summary\"]")
-                    return
-                }
-                print("hourly summary in Sydney: \(summary)")
+                let humidity = firstWeather?["humidity"] as? Float
+                XCTAssert(humidity != nil, "! hourly guard let humidity = dic[\"humidity\"]")
                 
-                guard let humidity = firstWeather["humidity"] as? Float else {
-                    XCTAssert(false, "! guard let humidity = currentlyDic[\"humidity\"]")
-                    return
-                }
-                print("hourly humidity in Sydney: \(humidity)")
+                let windSpeed = firstWeather?["windSpeed"] as? Float
+                XCTAssert(windSpeed != nil, "! hourly guard let windSpeed = dic[\"windSpeed\"]")
                 
-                guard let windSpeed = firstWeather["windSpeed"] as? Float else {
-                    XCTAssert(false, "! guard let windSpeed = currentlyDic[\"windSpeed\"]")
-                    return
-                }
-                print("hourly windSpeed in Sydney: \(windSpeed)")
             } catch let error as NSError {
                 XCTAssert(false, "! testRawWeatherAPI, error: \(error)")
             }
