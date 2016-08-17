@@ -34,6 +34,41 @@ class Sydney_WeatherTests: XCTestCase {
         XCTAssert(Constants.SydneyLocation.coordinate2D().longitude == SydneyLocationLongitude)
     }
     
+    
+    
+    func testRawWeatherURL() {
+        let weatherExpectation = expectation(description: "SomeService does stuff and runs the callback closure")
+        
+        let session = URLSession(configuration: URLSessionConfiguration.default)
+        
+        guard let url = URL(string: "https://api.forecast.io/forecast/9a678de7904f9c4c671ea43271da7acb/-33.8675,151.207") else {
+            XCTAssert(false, "Error: cannot create URL")
+            return
+        }
+        
+        let request = URLRequest(url: url)
+        
+        let task: URLSessionDataTask = session.dataTask(with: request) { (data: Data?, response, error) -> Void in
+            if let data = data {
+                do {
+                    let object = try JSONSerialization.jsonObject(with: data, options: []) as?  Dictionary<String, AnyObject>
+                    XCTAssert(object != nil, "! object != nil")
+                } catch let error as NSError {
+                    XCTAssert(false, "! testRawWeatherAPI, error: \(error)")
+                }
+                weatherExpectation.fulfill()
+            }
+        }
+        
+        task.resume()
+        
+        waitForExpectations(timeout: 5) { error in
+            if let error = error {
+                XCTFail("waitForExpectationsWithTimeout errored: \(error)")
+            }
+        }
+    }
+    
     func testPerformanceExample() {
         // This is an example of a performance test case.
         self.measure {

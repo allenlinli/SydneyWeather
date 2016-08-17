@@ -20,15 +20,5 @@ struct Constants
         {
             return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         }
-        
-        //???
-        /*
-        var coordinate2D: CLLocationCoordinate2D
-        {
-            get {
-                return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-            }
-        }
-         */
     }
 }
