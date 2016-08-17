@@ -25,14 +25,8 @@ struct Constants
     
     let ApiKey = "9a678de7904f9c4c671ea43271da7acb"
     
-    /* value we need
-    ● Temperature ● Humidity
-    ● Windspeed ● Summary
-    */
-    enum WeatherDataType: String {
-        case Temperature = "Temperature"
-        case Humidity = "Humidity"
-        case Windspeed = "Windspeed"
-        case Summary = "Summary"
+    enum WeatherType : Int {
+        case current = 0
+        case hourly
     }
 }

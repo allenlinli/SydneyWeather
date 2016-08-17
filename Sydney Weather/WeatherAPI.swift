@@ -20,5 +20,4 @@ class WeatherAPI
     
     let session : URLSession = URLSession(configuration: URLSessionConfiguration.default)
     
-    
 }
