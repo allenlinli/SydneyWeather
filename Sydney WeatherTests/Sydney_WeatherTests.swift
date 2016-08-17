@@ -8,6 +8,7 @@
 
 import XCTest
 @testable import Sydney_Weather
+import Contacts
 
 class Sydney_WeatherTests: XCTestCase {
     
@@ -21,9 +22,16 @@ class Sydney_WeatherTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testConstants() {
+        
+        let SydneyLocationLatitude = -33.8675
+        let SydneyLocationLongitude = 151.207
+        //XCTAssert(Constants.SydneyLocation.init().latitude == -33.8675)
+        //XCTAssert(Constants.SydneyLocation.init().longitude == 151.207)
+        XCTAssert(Constants.SydneyLocation.latitude == SydneyLocationLatitude)
+        XCTAssert(Constants.SydneyLocation.longitude == SydneyLocationLongitude)
+        XCTAssert(Constants.SydneyLocation.coordinate2D().latitude == SydneyLocationLatitude)
+        XCTAssert(Constants.SydneyLocation.coordinate2D().longitude == SydneyLocationLongitude)
     }
     
     func testPerformanceExample() {
