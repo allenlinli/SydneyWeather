@@ -406,6 +406,7 @@
 				E92FA6B91D643AA300520521 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E92FA6BA1D643AA300520521 /* Build configuration list for PBXNativeTarget "Sydney WeatherTests" */ = {
 			isa = XCConfigurationList;
@@ -414,6 +415,7 @@
 				E92FA6BC1D643AA300520521 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

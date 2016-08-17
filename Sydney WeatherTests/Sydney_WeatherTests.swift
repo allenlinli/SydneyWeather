@@ -51,8 +51,20 @@ class Sydney_WeatherTests: XCTestCase {
         let task: URLSessionDataTask = session.dataTask(with: request) { (data: Data?, response, error) -> Void in
             if let data = data {
                 do {
-                    let object = try JSONSerialization.jsonObject(with: data, options: []) as?  Dictionary<String, AnyObject>
-                    XCTAssert(object != nil, "! object != nil")
+                    let dic = try JSONSerialization.jsonObject(with: data, options: []) as?  [String: AnyObject]
+                    XCTAssert(dic != nil, "! object != nil")
+                    
+                    guard let currentlyDic = dic?["currently"] as? [String:AnyObject] else {
+                        XCTAssert(false, "! guard let currentlyDic = dic[\"currently\"]")
+                        return
+                    }
+                    
+                    guard let temperature = currentlyDic["temperature"] as? Float else {
+                        XCTAssert(false, "guard let temperature = currentlyDic[\"temperature\"]")
+                        return
+                    }
+                    print("temperature in Sydney: \(temperature)")
+                    
                 } catch let error as NSError {
                     XCTAssert(false, "! testRawWeatherAPI, error: \(error)")
                 }
