@@ -23,17 +23,26 @@ class WeatherApiTests: XCTestCase {
     }
     
     func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
         let testData = "https://api.forecast.io/forecast/9a678de7904f9c4c671ea43271da7acb/-33.8675,151.207"
         XCTAssert(WeatherAPI.sydneyLocationString == testData, "! WeatherAPI.sydneyLocationString == \(testData)")
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    func testGetCurrentWeather() {
+        let weatherExpectation : XCTestExpectation = expectation(description: "expectation description")
+        
+        WeatherAPI.getCurrentWeather(with: { (weather: Weather?) in
+            XCTAssert(weather != nil, "! weather != nil")
+            XCTAssert(weather?.temperature != nil, "")
+            XCTAssert(weather?.windSpeed != nil, "")
+            XCTAssert(weather?.humidity != nil, "")
+            XCTAssert(weather?.summary != nil, "")
+            weatherExpectation.fulfill()
+        })
+        
+        waitForExpectations(timeout: 5) { error in
+            if let error = error {
+                XCTFail("waitForExpectationsWithTimeout errored: \(error)")
+            }
         }
     }
-    
 }

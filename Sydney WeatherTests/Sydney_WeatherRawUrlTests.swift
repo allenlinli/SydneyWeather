@@ -56,6 +56,7 @@ class Sydney_WeatherRawUrlTests: XCTestCase {
         
         let task: URLSessionDataTask = session.dataTask(with: request) { (data: Data?, response, error) -> Void in
             XCTAssert(data != nil, "! data != nil")
+            XCTAssert(error == nil, "! error == nil")
             
             do {
                 let dic = try JSONSerialization.jsonObject(with: data!, options: []) as?  [String: AnyObject]
