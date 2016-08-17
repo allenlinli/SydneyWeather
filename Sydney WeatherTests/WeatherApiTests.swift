@@ -30,12 +30,13 @@ class WeatherApiTests: XCTestCase {
     func testGetCurrentWeather() {
         let weatherExpectation : XCTestExpectation = expectation(description: "expectation description")
         
-        WeatherAPI.getCurrentWeather(with: { (weathers: [Weather]?) in
-            XCTAssert(weathers?.first != nil, "! weather != nil")
-            XCTAssert(weathers?.first?.temperature != nil, "")
-            XCTAssert(weathers?.first?.windSpeed != nil, "")
-            XCTAssert(weathers?.first?.humidity != nil, "")
-            XCTAssert(weathers?.first?.summary != nil, "")
+        WeatherAPI.getCurrentWeather(with: { (weathers: [Weather]?, error: Error?) in
+            XCTAssertNil(error)
+            XCTAssertNotNil(weathers?.first)
+            XCTAssertNotNil(weathers?.first?.temperature)
+            XCTAssertNotNil(weathers?.first?.windSpeed)
+            XCTAssertNotNil(weathers?.first?.humidity)
+            XCTAssertNotNil(weathers?.first?.summary)
             weatherExpectation.fulfill()
         })
         
@@ -49,12 +50,13 @@ class WeatherApiTests: XCTestCase {
     func testGetHourlyWeathers() {
         let weatherExpectation : XCTestExpectation = expectation(description: "expectation description")
         
-        WeatherAPI.getHourlyWeathers(with: { (weathers: [Weather]?) in
-            XCTAssert(weathers?.first != nil, "! weather != nil")
-            XCTAssert(weathers?.first?.temperature != nil, "")
-            XCTAssert(weathers?.first?.windSpeed != nil, "")
-            XCTAssert(weathers?.first?.humidity != nil, "")
-            XCTAssert(weathers?.first?.summary != nil, "")
+        WeatherAPI.getHourlyWeathers(with: { (weathers: [Weather]?, error: Error?) in
+            XCTAssertNil(error)
+            XCTAssertNotNil(weathers?.first)
+            XCTAssertNotNil(weathers?.first?.temperature)
+            XCTAssertNotNil(weathers?.first?.windSpeed)
+            XCTAssertNotNil(weathers?.first?.humidity)
+            XCTAssertNotNil(weathers?.first?.summary)
             weatherExpectation.fulfill()
         })
         

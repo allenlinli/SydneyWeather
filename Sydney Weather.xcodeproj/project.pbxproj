@@ -87,7 +87,7 @@
 			children = (
 				E92FA69F1D643AA200520521 /* ViewController.swift */,
 				E92FA6A11D643AA200520521 /* Main.storyboard */,
-				E965C4D21D64A5300078BB96 /* Other */,
+				E965C4D21D64A5300078BB96 /* Common */,
 				E965C4D11D649DF50078BB96 /* Modal */,
 				E965C4CE1D6498550078BB96 /* Manager */,
 			);
@@ -107,7 +107,6 @@
 		E965C4CE1D6498550078BB96 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
-				E965C4CF1D649B5F0078BB96 /* Weather.swift */,
 				E965C4CC1D6498490078BB96 /* WeatherAPI.swift */,
 			);
 			name = Manager;
@@ -120,7 +119,7 @@
 			name = Modal;
 			sourceTree = "<group>";
 		};
-		E965C4D21D64A5300078BB96 /* Other */ = {
+		E965C4D21D64A5300078BB96 /* Common */ = {
 			isa = PBXGroup;
 			children = (
 				E92FA69D1D643AA200520521 /* AppDelegate.swift */,
@@ -128,8 +127,9 @@
 				E92FA6A91D643AA200520521 /* Info.plist */,
 				E92FA6A41D643AA200520521 /* Assets.xcassets */,
 				E92FA6BD1D64494900520521 /* Constants.swift */,
+				E965C4CF1D649B5F0078BB96 /* Weather.swift */,
 			);
-			name = Other;
+			name = Common;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

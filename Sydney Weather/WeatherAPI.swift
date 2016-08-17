@@ -24,23 +24,11 @@ public class WeatherAPI
     static let url: URL = URL(string: sydneyLocationString)!
     static let request = URLRequest(url: url)
     
-    public typealias DicType = [String: AnyObject]
-    public enum Key: String
-    {
-        case temperature = "temperature"
-        case humidity = "humidity"
-        case windSpeed = "windSpeed"
-        case summary = "summary"
-        case time = "time"
-        case currently = "currently"
-        case data = "data"
-    }
-    
     // TODO: Not sure which one is better?
     // 1. (temperature: Temperature?,  windSpeed: WindSpeed?, humidity: Humidity?, summary: Summary?) -> Void
     // 2. Weather
     // TODO: Make CompletionHandler = (with weathers: [Weather]?)
-    public typealias CompletionHandler = (weathers: [Weather]?) -> Void
+    public typealias CompletionHandler = (weathers: [Weather]?, error: Error?) -> Void
     
     enum TimingType : Int {
         case current = 0
@@ -66,7 +54,7 @@ public class WeatherAPI
             if error != nil
             {
                 // use closure to clear UI
-                completionHandler(weathers: nil)
+                completionHandler(weathers: nil, error: error)
                 assertionFailure("! error != nil: \(error)")
                 return
             }
@@ -76,19 +64,20 @@ public class WeatherAPI
                 let dic = try JSONSerialization.jsonObject(with: data!, options: []) as?  [String: AnyObject]
                 assert(dic != nil, "! dic != nil")
                 
-                if let weatherDic = dic?[Key.currently.rawValue] as? DicType
+                if let weatherDic = dic?[Constants.WeatherAPIKey.currently] as? DicType
                 {
-                    completionHandler(weathers: [Weather(with: weatherDic)])
+                    completionHandler(weathers: [Weather(with: weatherDic)], error: nil)
                 }
                 else
                 {
                     assertionFailure("! if let weatherDic = weatherDic as? DicType")
+                    completionHandler(weathers: nil, error: error)
                 }
             }
             catch let error as NSError
             {
-                completionHandler(weathers: nil)
                 assertionFailure("! error in let dic = try JSONSerialization.jsonObject:\(error)")
+                completionHandler(weathers: nil, error: error)
             }
         }
         
@@ -101,7 +90,7 @@ public class WeatherAPI
             if error != nil
             {
                 // use closure to clear UI
-                completionHandler(weathers: nil)
+                completionHandler(weathers: nil, error: error)
                 assertionFailure("! error != nil: \(error)")
                 return
             }
@@ -110,8 +99,8 @@ public class WeatherAPI
                 let dic = try JSONSerialization.jsonObject(with: data!, options: []) as?  [String: AnyObject]
                 assert(dic != nil, "! dic != nil")
                 
-                let hourlyDic = dic?["hourly"] as? DicType
-                let data = hourlyDic?["data"] as? [AnyObject]
+                let hourlyDic = dic?[Constants.WeatherAPIKey.hourly] as? DicType
+                let data = hourlyDic?[Constants.WeatherAPIKey.data] as? [AnyObject]
                 
                 var weathers: [Weather] = []
                 data?.forEach({ (weatherDic: AnyObject) in
@@ -125,32 +114,14 @@ public class WeatherAPI
                     }
                 })
                 
-                completionHandler(weathers: weathers)
+                assert(weathers.count > 0, "! weathers.count > 0")
+                completionHandler(weathers: weathers, error: nil)
             } catch let error as NSError {
                 assertionFailure("error: \(error)")
-                completionHandler(weathers: nil)
+                completionHandler(weathers: nil, error: error)
             }
         }
         
         task.resume()
     }
-    
-    /*
-    private static func weather(with dictionary: DicType) -> Weather?
-    {
-        let temperature = dictionary[Key.temperature.rawValue] as? Temperature
-        let summary = dictionary[Key.summary.rawValue] as? Summary
-        let humidity = dictionary[Key.humidity.rawValue] as? Humidity
-        let windSpeed = dictionary[Key.windSpeed.rawValue] as? WindSpeed
-        let unixTime = dictionary[Key.time.rawValue] as? TimeInterval
-        var date: Date?
-        
-        assert(unixTime != nil, "! unixTime")
-        
-        if let unixTime = unixTime
-        {
-            date = Date(timeIntervalSince1970: unixTime)
-        }
-        //return Weather(temperature: temperature, humidity: humidity, windSpeed: windSpeed, summary: summary, date: date)
-    }*/
 }

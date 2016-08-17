@@ -13,7 +13,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        WeatherAPI.getCurrentWeather { (weathers) in
+        WeatherAPI.getCurrentWeather { (weathers, error) in
             print("weather in viewDidLoad:\(weathers?.first)")
         }
         // Do any additional setup after loading the view, typically from a nib.
