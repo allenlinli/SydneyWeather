@@ -24,8 +24,8 @@ public class WeatherAPI
     static let url: URL = URL(string: sydneyLocationString)!
     static let request = URLRequest(url: url)
     
-    private typealias DicType = [String: AnyObject]
-    private enum `Type`: String
+    public typealias DicType = [String: AnyObject]
+    public enum Key: String
     {
         case temperature = "temperature"
         case humidity = "humidity"
@@ -76,16 +76,9 @@ public class WeatherAPI
                 let dic = try JSONSerialization.jsonObject(with: data!, options: []) as?  [String: AnyObject]
                 assert(dic != nil, "! dic != nil")
                 
-                if let weatherDic = dic?[Type.currently.rawValue] as? DicType
+                if let weatherDic = dic?[Key.currently.rawValue] as? DicType
                 {
-                    if let weather = weather(with: weatherDic)
-                    {
-                        completionHandler(weathers: [weather])
-                    }
-                    else
-                    {
-                        assertionFailure("! if let weather = weather(with: weatherDic)")
-                    }
+                    completionHandler(weathers: [Weather(with: weatherDic)])
                 }
                 else
                 {
@@ -124,14 +117,7 @@ public class WeatherAPI
                 data?.forEach({ (weatherDic: AnyObject) in
                     if let weatherDic = weatherDic as? DicType
                     {
-                        if let weather = weather(with: weatherDic)
-                        {
-                            weathers.append(weather)
-                        }
-                        else
-                        {
-                            assertionFailure("! if let weather = weather(with: weatherDic)")
-                        }
+                        weathers.append(Weather(with: weatherDic))
                     }
                     else
                     {
@@ -149,13 +135,14 @@ public class WeatherAPI
         task.resume()
     }
     
+    /*
     private static func weather(with dictionary: DicType) -> Weather?
     {
-        let temperature = dictionary[Type.temperature.rawValue] as? Temperature
-        let summary = dictionary[Type.summary.rawValue] as? Summary
-        let humidity = dictionary[Type.humidity.rawValue] as? Humidity
-        let windSpeed = dictionary[Type.windSpeed.rawValue] as? WindSpeed
-        let unixTime = dictionary[Type.time.rawValue] as? TimeInterval
+        let temperature = dictionary[Key.temperature.rawValue] as? Temperature
+        let summary = dictionary[Key.summary.rawValue] as? Summary
+        let humidity = dictionary[Key.humidity.rawValue] as? Humidity
+        let windSpeed = dictionary[Key.windSpeed.rawValue] as? WindSpeed
+        let unixTime = dictionary[Key.time.rawValue] as? TimeInterval
         var date: Date?
         
         assert(unixTime != nil, "! unixTime")
@@ -164,6 +151,6 @@ public class WeatherAPI
         {
             date = Date(timeIntervalSince1970: unixTime)
         }
-        return Weather(temperature: temperature, humidity: humidity, windSpeed: windSpeed, summary: summary, date: date)
-    }
+        //return Weather(temperature: temperature, humidity: humidity, windSpeed: windSpeed, summary: summary, date: date)
+    }*/
 }

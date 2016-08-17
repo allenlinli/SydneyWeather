@@ -107,6 +107,7 @@
 		E965C4CE1D6498550078BB96 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				E965C4CF1D649B5F0078BB96 /* Weather.swift */,
 				E965C4CC1D6498490078BB96 /* WeatherAPI.swift */,
 			);
 			name = Manager;
@@ -115,7 +116,6 @@
 		E965C4D11D649DF50078BB96 /* Modal */ = {
 			isa = PBXGroup;
 			children = (
-				E965C4CF1D649B5F0078BB96 /* Weather.swift */,
 			);
 			name = Modal;
 			sourceTree = "<group>";
