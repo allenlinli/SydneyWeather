@@ -20,4 +20,5 @@ public struct Weather
     var humidity: WindSpeed?
     var windSpeed: Humidity?
     var summary: Summary?
+    var date: Date?
 }

@@ -30,12 +30,31 @@ class WeatherApiTests: XCTestCase {
     func testGetCurrentWeather() {
         let weatherExpectation : XCTestExpectation = expectation(description: "expectation description")
         
-        WeatherAPI.getCurrentWeather(with: { (weather: Weather?) in
-            XCTAssert(weather != nil, "! weather != nil")
-            XCTAssert(weather?.temperature != nil, "")
-            XCTAssert(weather?.windSpeed != nil, "")
-            XCTAssert(weather?.humidity != nil, "")
-            XCTAssert(weather?.summary != nil, "")
+        WeatherAPI.getCurrentWeather(with: { (weathers: [Weather]?) in
+            XCTAssert(weathers?.first != nil, "! weather != nil")
+            XCTAssert(weathers?.first?.temperature != nil, "")
+            XCTAssert(weathers?.first?.windSpeed != nil, "")
+            XCTAssert(weathers?.first?.humidity != nil, "")
+            XCTAssert(weathers?.first?.summary != nil, "")
+            weatherExpectation.fulfill()
+        })
+        
+        waitForExpectations(timeout: 5) { error in
+            if let error = error {
+                XCTFail("waitForExpectationsWithTimeout errored: \(error)")
+            }
+        }
+    }
+    
+    func testGetHourlyWeathers() {
+        let weatherExpectation : XCTestExpectation = expectation(description: "expectation description")
+        
+        WeatherAPI.getHourlyWeathers(with: { (weathers: [Weather]?) in
+            XCTAssert(weathers?.first != nil, "! weather != nil")
+            XCTAssert(weathers?.first?.temperature != nil, "")
+            XCTAssert(weathers?.first?.windSpeed != nil, "")
+            XCTAssert(weathers?.first?.humidity != nil, "")
+            XCTAssert(weathers?.first?.summary != nil, "")
             weatherExpectation.fulfill()
         })
         
