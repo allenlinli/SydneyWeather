@@ -12,6 +12,8 @@ import Contacts
 
 class Sydney_WeatherRawUrlTests: XCTestCase {
     let session : URLSession = URLSession(configuration: URLSessionConfiguration.default)
+    
+    // API format: https://api.forecast.io/forecast/APIKEY/LATITUDE,LONGITUDE
     let urlString = "https://api.forecast.io/forecast/9a678de7904f9c4c671ea43271da7acb/-33.8675,151.207"
     
     override func setUp() {
@@ -41,6 +43,11 @@ class Sydney_WeatherRawUrlTests: XCTestCase {
         XCTAssert(url != nil, "! url != nil")
     }
     
+    /*
+     Test the following values in current weather
+     ● Temperature ● Humidity
+     ● Windspeed ● Summary
+ */
     func testRawCurrentWeatherURL() {
         let weatherExpectation : XCTestExpectation = expectation(description: "expectation description")
         
@@ -85,6 +92,12 @@ class Sydney_WeatherRawUrlTests: XCTestCase {
         }
     }
     
+    /*
+     Test the following values in hourly weather
+     ● Time
+     ● Temperature ● Humidity
+     ● Windspeed ● Summary
+     */
     func testRawHourlyWeatherURL() {
         let weatherExpectation : XCTestExpectation = expectation(description: "expectation description")
         
