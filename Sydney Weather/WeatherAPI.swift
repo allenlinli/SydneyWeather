@@ -24,10 +24,11 @@ public class WeatherAPI
     static let url: URL = URL(string: sydneyLocationString)!
     static let request = URLRequest(url: url)
     
-    // TODO: Not sure which one is better?
+    // TODO: Not sure which one is better? Maybe write a WeatherBasicDataProtocol if needed
     // 1. (temperature: Temperature?,  windSpeed: WindSpeed?, humidity: Humidity?, summary: Summary?) -> Void
-    // 2. Weather
+    // 2. completionHandler(weathers: [Weather(with: weatherDic)], error: nil)
     // TODO: Make CompletionHandler = (with weathers: [Weather]?)
+    // TODO: use thoughtbot/Argo or SwiftyJSON/SwiftyJSON later
     public typealias CompletionHandler = (weathers: [Weather]?, error: Error?) -> Void
     
     enum TimingType : Int {
@@ -46,8 +47,9 @@ public class WeatherAPI
         }
     }
     
-    // TODO: can use try catch in the future. 
+    // TODO: can use try catch for the getCurrentWeather in the future. (can we?)
     // And use code error to decide if I clean UI or not
+    // reference JSONSerialization.jsonObject or URLSession.dataTask for error handling
     public static func getCurrentWeather(with completionHandler: CompletionHandler)
     {
         let task: URLSessionDataTask = session.dataTask(with: request) { (data: Data?, response, error) -> Void in
@@ -55,12 +57,12 @@ public class WeatherAPI
             {
                 // use closure to clear UI
                 completionHandler(weathers: nil, error: error)
-                assertionFailure("! error != nil: \(error)")
                 return
             }
             
             do
             {
+                // TODO: JSONSerialization is too slow
                 let dic = try JSONSerialization.jsonObject(with: data!, options: []) as?  [String: AnyObject]
                 assert(dic != nil, "! dic != nil")
                 
@@ -70,14 +72,13 @@ public class WeatherAPI
                 }
                 else
                 {
-                    assertionFailure("! if let weatherDic = weatherDic as? DicType")
-                    completionHandler(weathers: nil, error: error)
+                    completionHandler(weathers: nil, error: NSError(domain: "json", code: 001, userInfo: ["description":"JSONSerialization.jsonObject failed"]))
                 }
             }
             catch let error as NSError
             {
-                assertionFailure("! error in let dic = try JSONSerialization.jsonObject:\(error)")
                 completionHandler(weathers: nil, error: error)
+                return
             }
         }
         

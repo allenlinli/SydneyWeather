@@ -22,7 +22,7 @@ class WeatherApiTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
+    func testSydneyLocationString() {
         let testData = "https://api.forecast.io/forecast/9a678de7904f9c4c671ea43271da7acb/-33.8675,151.207"
         XCTAssert(WeatherAPI.sydneyLocationString == testData, "! WeatherAPI.sydneyLocationString == \(testData)")
     }

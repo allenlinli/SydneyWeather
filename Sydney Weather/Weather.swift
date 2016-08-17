@@ -26,14 +26,13 @@ public struct Weather
         self.windSpeed = dictionary[Constants.WeatherAPIKey.windSpeed] as? WindSpeed
         let unixTime = dictionary[Constants.WeatherAPIKey.time] as? TimeInterval
         
-        assert(unixTime != nil, "! unixTime")
-        
         if let unixTime = unixTime
         {
             self.date = Date(timeIntervalSince1970: unixTime)
         }
     }
     
+    /*
     init(temperature: Temperature?, humidity: Humidity?, windSpeed: WindSpeed?, summary: Summary?, date: Date?) {
         self.temperature = temperature
         self.humidity = humidity
@@ -41,4 +40,5 @@ public struct Weather
         self.summary = summary
         self.date = date
     }
+    */
 }
