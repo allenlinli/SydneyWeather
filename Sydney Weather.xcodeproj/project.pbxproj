@@ -88,7 +88,6 @@
 				E92FA6A11D643AA200520521 /* Main.storyboard */,
 				E92FA6A41D643AA200520521 /* Assets.xcassets */,
 				E92FA6A61D643AA200520521 /* LaunchScreen.storyboard */,
-				E92FA6BD1D64494900520521 /* Constants.swift */,
 				E92FA6A91D643AA200520521 /* Info.plist */,
 				E965C4D11D649DF50078BB96 /* Modal */,
 				E965C4CE1D6498550078BB96 /* Manager */,
@@ -117,6 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				E965C4CF1D649B5F0078BB96 /* Weather.swift */,
+				E92FA6BD1D64494900520521 /* Constants.swift */,
 			);
 			name = Modal;
 			sourceTree = "<group>";

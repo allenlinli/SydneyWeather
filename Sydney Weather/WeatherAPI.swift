@@ -18,6 +18,22 @@ class WeatherAPI
 {
     static let sharedInstance = WeatherAPI()
     
+    let ApiKey = "9a678de7904f9c4c671ea43271da7acb"
+    
+    enum TimingType : Int {
+        case current = 0
+        case hourly
+    }
+    
     let session : URLSession = URLSession(configuration: URLSessionConfiguration.default)
     
+    public func getCurrentWeather() -> (temperature: Float?, humidity: Float?, windspeed: Float?, summary: String?)?
+    {
+        return nil
+    }
+    
+    public func getHourlyWeathers() -> [Weather]?
+    {
+        return nil
+    }
 }

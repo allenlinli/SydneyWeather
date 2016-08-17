@@ -9,24 +9,17 @@
 import Foundation
 import CoreLocation
 
-struct Constants
+public struct Constants
 {
     // Sydney GPS: lat -33.8675; long 151.207;
-    struct SydneyLocation
+    public struct SydneyLocation
     {
-        static let latitude: Double = -33.8675
-        static let longitude: Double = 151.207
+        public static let latitude: Double = -33.8675
+        public static let longitude: Double = 151.207
         
-        static func coordinate2D() -> CLLocationCoordinate2D
+        public static func coordinate2D() -> CLLocationCoordinate2D
         {
             return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         }
-    }
-    
-    let ApiKey = "9a678de7904f9c4c671ea43271da7acb"
-    
-    enum WeatherType : Int {
-        case current = 0
-        case hourly
     }
 }
