@@ -24,6 +24,7 @@ public class WeatherAPI
     static let url: URL = URL(string: sydneyLocationString)!
     static let request = URLRequest(url: url)
     
+    // MARK: I can try to convert my Python code to Swift to examine Jason from API
     // TODO: Not sure which one is better? Maybe write a WeatherBasicDataProtocol if needed
     // 1. (temperature: Temperature?,  windSpeed: WindSpeed?, humidity: Humidity?, summary: Summary?) -> Void
     // 2. completionHandler(weathers: [Weather(with: weatherDic)], error: nil)

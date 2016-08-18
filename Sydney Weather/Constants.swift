@@ -43,4 +43,8 @@ public struct Constants
     }
     
     static let HourlyWeatherTableViewCellIdentifier = "HourlyWeatherTableViewCellIdentifier"
+    
+    public static func celsius(wtih fahrenheit: Float) -> Float {
+        return Float(5.0 / 9.0 * fahrenheit - 32.0)
+    }
 }
