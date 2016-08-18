@@ -8,22 +8,65 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-
+class ViewController: UIViewController
+{
+    @IBOutlet weak var summaryLabel: UILabel!
+    @IBOutlet weak var temperatureLabel: UILabel!
+    @IBOutlet weak var humidityLabel: UILabel!
+    @IBOutlet weak var windSpeedLabel: UILabel!
+    @IBOutlet weak var hourlyWeatherTableView: HourlyWeatherTableView!
+    
+    var currentWeather: Weather?
+    var hourlyWeathers: [Weather]?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        WeatherAPI.getCurrentWeather { (weathers, error) in
-            print("weather in viewDidLoad:\(weathers?.first)")
-        }
-        // Do any additional setup after loading the view, typically from a nib.
+        //hourlyWeatherTableView.delegate = self
+        //hourlyWeatherTableView.dataSource = self
+        hourlyWeatherTableView.register(HourlyWeatherTableViewCell.self, forCellReuseIdentifier: Constants.HourlyWeatherTableViewCellIdentifier)
+        
+        //FIXME: can use operation queue for doing updateAllWeathers only once
+        WeatherAPI.getCurrentWeather(with: { [weak self] (weathers, error) in
+            self?.currentWeather = weathers?.first
+            self?.updateAllWeathers()
+        })
+        
+        WeatherAPI.getHourlyWeathers(with: { [weak self] (weathers, error) in
+            self?.hourlyWeathers = weathers
+            self?.updateAllWeathers()
+        })
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @IBAction func refreshButtonPressed(_ sender: AnyObject)
+    {
+        updateAllWeathers()
     }
-
-
+    
+    func updateAllWeathers()
+    {
+        // update current weather
+        summaryLabel.text = currentWeather?.summary
+        temperatureLabel.text = String(currentWeather?.temperature).appending("°c")
+        humidityLabel.text = String(currentWeather?.humidity).appending("%")
+        windSpeedLabel.text = String(currentWeather?.windSpeed).appending(" km/h")
+        
+        // update hourly weathers
+        hourlyWeatherTableView.reloadData()
+    }
 }
 
+/*
+extension ViewController: UITableViewDelegate, UITableViewDataSource
+{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return hourlyWeathers?.count ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = hourlyWeatherTableView.dequeueReusableCell( withIdentifier: NSStringFromClass(HourlyWeatherTableViewCell.self), for: indexPath) as! HourlyWeatherTableViewCell
+        
+        return cell
+    }
+}
+
+*/

@@ -41,4 +41,6 @@ public struct Constants
         static let data = "data"
         static let hourly = "hourly"
     }
+    
+    static let HourlyWeatherTableViewCellIdentifier = "HourlyWeatherTableViewCellIdentifier"
 }
