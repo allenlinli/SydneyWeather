@@ -31,22 +31,7 @@ class ViewController: UIViewController
         let nib = UINib(nibName: "HourlyWeatherTableViewCell", bundle: nil)
         hourlyWeatherTableView.register(nib, forCellReuseIdentifier: Constants.HourlyWeatherTableViewCellIdentifier)
         
-        //FIXME: can use operation queue for doing updateAllWeathers only once
-        WeatherAPI.getCurrentWeather(with: { [weak self] (weathers, error) in
-            self?.currentWeather = weathers?.first
-            DispatchQueue.main.async {
-                self?.updateAllWeathers()
-                print("finish updating getCurrentWeather")
-            }
-        })
-        
-        WeatherAPI.getHourlyWeathers(with: { [weak self] (weathers, error) in
-            self?.hourlyWeathers = weathers
-            DispatchQueue.main.async {
-                self?.updateAllWeathers()
-                print("finish updating getHourlyWeathers")
-            }
-        })
+        updateAllWeathers()
     }
     
     @IBAction func refreshButtonPressed(_ sender: AnyObject)
@@ -54,7 +39,25 @@ class ViewController: UIViewController
         updateAllWeathers()
     }
     
-    func updateCurrentWeather()
+    func updateAllWeathers()
+    {
+        //FIXME: can use operation queue for doing updateAllWeathers only once
+        WeatherAPI.getCurrentWeather(with: { [weak self] (weathers, error) in
+            self?.currentWeather = weathers?.first
+            DispatchQueue.main.async {
+                self?.updateUI()
+            }
+        })
+        
+        WeatherAPI.getHourlyWeathers(with: { [weak self] (weathers, error) in
+            self?.hourlyWeathers = weathers
+            DispatchQueue.main.async {
+                self?.updateUI()
+            }
+        })
+    }
+    
+    func updateUI()
     {
         guard let currentWeather = currentWeather else {
             assertionFailure("no currentWeather")
@@ -67,14 +70,11 @@ class ViewController: UIViewController
         temperatureLabel.text = weatherPresenter.temperature
         humidityLabel.text = weatherPresenter.humidity
         windSpeedLabel.text = weatherPresenter.windSpeed
-    }
-    
-    func updateAllWeathers()
-    {
-        updateCurrentWeather()
         
         // update hourly weathers
         hourlyWeatherTableView.reloadData()
+        
+        print("log updateUI()")
     }
 }
 
