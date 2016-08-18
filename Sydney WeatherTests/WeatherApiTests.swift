@@ -52,11 +52,18 @@ class WeatherApiTests: XCTestCase {
         
         WeatherAPI.getHourlyWeathers(with: { (weathers: [Weather]?, error: Error?) in
             XCTAssertNil(error)
-            XCTAssertNotNil(weathers?.first)
-            XCTAssertNotNil(weathers?.first?.temperature)
-            XCTAssertNotNil(weathers?.first?.windSpeed)
-            XCTAssertNotNil(weathers?.first?.humidity)
-            XCTAssertNotNil(weathers?.first?.summary)
+            
+            weathers?.forEach({ (weather: Weather) in
+                XCTAssertNotNil(weather)
+                XCTAssertNotNil(weather.temperature)
+                XCTAssertNotNil(weather.windSpeed)
+                XCTAssertNotNil(weather.humidity)
+                XCTAssertNotNil(weather.summary)
+                XCTAssertNotNil(weather.date)
+                
+                print("weather date: \(weather.date)")
+            })
+            
             weatherExpectation.fulfill()
         })
         

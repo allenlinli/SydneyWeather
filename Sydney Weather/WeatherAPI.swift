@@ -24,6 +24,7 @@ public class WeatherAPI
     static let url: URL = URL(string: sydneyLocationString)!
     static let request = URLRequest(url: url)
     
+    // MARK: I can try to convert my Python code to Swift to examine Jason from API
     // TODO: Not sure which one is better? Maybe write a WeatherBasicDataProtocol if needed
     // 1. (temperature: Temperature?,  windSpeed: WindSpeed?, humidity: Humidity?, summary: Summary?) -> Void
     // 2. completionHandler(weathers: [Weather(with: weatherDic)], error: nil)
@@ -107,15 +108,18 @@ public class WeatherAPI
                 data?.forEach({ (weatherDic: AnyObject) in
                     if let weatherDic = weatherDic as? DicType
                     {
-                        weathers.append(Weather(with: weatherDic))
+                        let weather = Weather(with: weatherDic)
+                        if weather.date > Date()
+                        {
+                            weathers.append(weather)
+                        }
                     }
                     else
                     {
                         assertionFailure("! if let weatherDic = weatherDic as? DicType")
                     }
                 })
-                
-                assert(weathers.count > 0, "! weathers.count > 0")
+
                 completionHandler(weathers: weathers, error: nil)
             } catch let error as NSError {
                 assertionFailure("error: \(error)")

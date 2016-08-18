@@ -31,14 +31,4 @@ public struct Weather
             self.date = Date(timeIntervalSince1970: unixTime)
         }
     }
-    
-    /*
-    init(temperature: Temperature?, humidity: Humidity?, windSpeed: WindSpeed?, summary: Summary?, date: Date?) {
-        self.temperature = temperature
-        self.humidity = humidity
-        self.windSpeed = windSpeed
-        self.summary = summary
-        self.date = date
-    }
-    */
 }
