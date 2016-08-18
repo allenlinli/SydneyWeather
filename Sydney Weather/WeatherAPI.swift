@@ -108,15 +108,18 @@ public class WeatherAPI
                 data?.forEach({ (weatherDic: AnyObject) in
                     if let weatherDic = weatherDic as? DicType
                     {
-                        weathers.append(Weather(with: weatherDic))
+                        let weather = Weather(with: weatherDic)
+                        if weather.date > Date()
+                        {
+                            weathers.append(weather)
+                        }
                     }
                     else
                     {
                         assertionFailure("! if let weatherDic = weatherDic as? DicType")
                     }
                 })
-                
-                assert(weathers.count > 0, "! weathers.count > 0")
+
                 completionHandler(weathers: weathers, error: nil)
             } catch let error as NSError {
                 assertionFailure("error: \(error)")

@@ -10,9 +10,9 @@ import UIKit
 
 class HourlyWeatherTableViewCell: UITableViewCell
 {
-    
     @IBOutlet weak var summaryLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var windSpeedLabel: UILabel!
     @IBOutlet weak var humidityLabel: UILabel!
+    @IBOutlet weak var temperatureLabel: UILabel!
 }

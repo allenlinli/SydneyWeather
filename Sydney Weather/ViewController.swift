@@ -14,7 +14,7 @@ class ViewController: UIViewController
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var humidityLabel: UILabel!
     @IBOutlet weak var windSpeedLabel: UILabel!
-    @IBOutlet weak var hourlyWeatherTableView: HourlyWeatherTableView!
+    @IBOutlet weak var hourlyWeatherTableView: UITableView!
     
     var currentWeather: Weather?
     var hourlyWeathers: [Weather]?
@@ -26,7 +26,10 @@ class ViewController: UIViewController
         
         hourlyWeatherTableView.delegate = self
         hourlyWeatherTableView.dataSource = self
-        hourlyWeatherTableView.register(HourlyWeatherTableViewCell.self, forCellReuseIdentifier: Constants.HourlyWeatherTableViewCellIdentifier)
+        //hourlyWeatherTableView.register(HourlyWeatherTableViewCell.self, forCellReuseIdentifier: Constants.HourlyWeatherTableViewCellIdentifier)
+        //hourlyWeatherTableView.register(nib: UINib(nibName: HourlyWeatherTableViewCell, bundle: nil), forCellReuseIdentifier: Constants.HourlyWeatherTableViewCellIdentifier)
+        let nib = UINib(nibName: "HourlyWeatherTableViewCell", bundle: nil)
+        hourlyWeatherTableView.register(nib, forCellReuseIdentifier: Constants.HourlyWeatherTableViewCellIdentifier)
         
         //FIXME: can use operation queue for doing updateAllWeathers only once
         WeatherAPI.getCurrentWeather(with: { [weak self] (weathers, error) in
@@ -45,6 +48,7 @@ class ViewController: UIViewController
             }
         })
     }
+    
     @IBAction func refreshButtonPressed(_ sender: AnyObject)
     {
         updateAllWeathers()
@@ -57,33 +61,12 @@ class ViewController: UIViewController
             return
         }
         
-        summaryLabel.text = nil
-        temperatureLabel.text = nil
-        humidityLabel.text = nil
-        windSpeedLabel.text = nil
+        let weatherPresenter = WeatherDataPresenter(weather: currentWeather)
         
-        // update current weather
-        summaryLabel.text = currentWeather.summary! ?? ""
-        
-        if let temperature = currentWeather.temperature {
-            let cTemperature = Constants.celsius(wtih: temperature)
-            temperatureLabel.text = NSString(format:"%.0f", cTemperature).appending("°c")
-        }
-        
-        if let humidity = currentWeather.humidity {
-            humidityLabel.text = NSString(format:"%.0f", humidity*100).appending("°%")
-        }
-        
-        if let windSpeed = currentWeather.windSpeed {
-            windSpeedLabel.text = NSString(format:"%.0f", windSpeed).appending(" km/h")
-        }
-
-        print("start to print")
-        print(currentWeather)
-        print(summaryLabel.text)
-        print(temperatureLabel.text)
-        print(humidityLabel.text)
-        print(windSpeedLabel.text)
+        summaryLabel.text = weatherPresenter.summary
+        temperatureLabel.text = weatherPresenter.temperature
+        humidityLabel.text = weatherPresenter.humidity
+        windSpeedLabel.text = weatherPresenter.windSpeed
     }
     
     func updateAllWeathers()
@@ -103,6 +86,18 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = hourlyWeatherTableView.dequeueReusableCell( withIdentifier: Constants.HourlyWeatherTableViewCellIdentifier, for: indexPath) as! HourlyWeatherTableViewCell
+        
+        if let weather = hourlyWeathers?[indexPath.row]
+        {
+            let weatherPresenter = WeatherDataPresenter(weather: weather)
+            
+            print("cell : \(cell)")
+            cell.summaryLabel.text = weatherPresenter.summary
+            cell.temperatureLabel.text = weatherPresenter.temperature
+            cell.humidityLabel.text = weatherPresenter.humidity
+            cell.windSpeedLabel.text = weatherPresenter.windSpeed
+            cell.timeLabel.text = weatherPresenter.time
+        }
         
         return cell
     }
