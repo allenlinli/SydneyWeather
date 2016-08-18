@@ -12,7 +12,11 @@
 		E92FA6A31D643AA200520521 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E92FA6A11D643AA200520521 /* Main.storyboard */; };
 		E92FA6A51D643AA200520521 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E92FA6A41D643AA200520521 /* Assets.xcassets */; };
 		E92FA6A81D643AA200520521 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E92FA6A61D643AA200520521 /* LaunchScreen.storyboard */; };
-		E92FA6B31D643AA300520521 /* Sydney_WeatherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92FA6B21D643AA300520521 /* Sydney_WeatherTests.swift */; };
+		E92FA6B31D643AA300520521 /* Sydney_WeatherRawUrlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92FA6B21D643AA300520521 /* Sydney_WeatherRawUrlTests.swift */; };
+		E92FA6BE1D64494900520521 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92FA6BD1D64494900520521 /* Constants.swift */; };
+		E965C4CD1D6498490078BB96 /* WeatherAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E965C4CC1D6498490078BB96 /* WeatherAPI.swift */; };
+		E965C4D01D649B5F0078BB96 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = E965C4CF1D649B5F0078BB96 /* Weather.swift */; };
+		E965C4D91D64AAB50078BB96 /* WeatherApiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E965C4D81D64AAB50078BB96 /* WeatherApiTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,8 +38,12 @@
 		E92FA6A71D643AA200520521 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E92FA6A91D643AA200520521 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E92FA6AE1D643AA300520521 /* Sydney WeatherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Sydney WeatherTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E92FA6B21D643AA300520521 /* Sydney_WeatherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sydney_WeatherTests.swift; sourceTree = "<group>"; };
+		E92FA6B21D643AA300520521 /* Sydney_WeatherRawUrlTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sydney_WeatherRawUrlTests.swift; sourceTree = "<group>"; };
 		E92FA6B41D643AA300520521 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E92FA6BD1D64494900520521 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		E965C4CC1D6498490078BB96 /* WeatherAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherAPI.swift; sourceTree = "<group>"; };
+		E965C4CF1D649B5F0078BB96 /* Weather.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
+		E965C4D81D64AAB50078BB96 /* WeatherApiTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherApiTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,12 +85,11 @@
 		E92FA69C1D643AA200520521 /* Sydney Weather */ = {
 			isa = PBXGroup;
 			children = (
-				E92FA69D1D643AA200520521 /* AppDelegate.swift */,
 				E92FA69F1D643AA200520521 /* ViewController.swift */,
 				E92FA6A11D643AA200520521 /* Main.storyboard */,
-				E92FA6A41D643AA200520521 /* Assets.xcassets */,
-				E92FA6A61D643AA200520521 /* LaunchScreen.storyboard */,
-				E92FA6A91D643AA200520521 /* Info.plist */,
+				E965C4D21D64A5300078BB96 /* Common */,
+				E965C4D11D649DF50078BB96 /* Modal */,
+				E965C4CE1D6498550078BB96 /* Manager */,
 			);
 			path = "Sydney Weather";
 			sourceTree = "<group>";
@@ -90,10 +97,39 @@
 		E92FA6B11D643AA300520521 /* Sydney WeatherTests */ = {
 			isa = PBXGroup;
 			children = (
-				E92FA6B21D643AA300520521 /* Sydney_WeatherTests.swift */,
+				E92FA6B21D643AA300520521 /* Sydney_WeatherRawUrlTests.swift */,
+				E965C4D81D64AAB50078BB96 /* WeatherApiTests.swift */,
 				E92FA6B41D643AA300520521 /* Info.plist */,
 			);
 			path = "Sydney WeatherTests";
+			sourceTree = "<group>";
+		};
+		E965C4CE1D6498550078BB96 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				E965C4CC1D6498490078BB96 /* WeatherAPI.swift */,
+			);
+			name = Manager;
+			sourceTree = "<group>";
+		};
+		E965C4D11D649DF50078BB96 /* Modal */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Modal;
+			sourceTree = "<group>";
+		};
+		E965C4D21D64A5300078BB96 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				E92FA69D1D643AA200520521 /* AppDelegate.swift */,
+				E92FA6A61D643AA200520521 /* LaunchScreen.storyboard */,
+				E92FA6A91D643AA200520521 /* Info.plist */,
+				E92FA6A41D643AA200520521 /* Assets.xcassets */,
+				E92FA6BD1D64494900520521 /* Constants.swift */,
+				E965C4CF1D649B5F0078BB96 /* Weather.swift */,
+			);
+			name = Common;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -200,7 +236,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				E92FA6A01D643AA200520521 /* ViewController.swift in Sources */,
+				E965C4CD1D6498490078BB96 /* WeatherAPI.swift in Sources */,
 				E92FA69E1D643AA200520521 /* AppDelegate.swift in Sources */,
+				E92FA6BE1D64494900520521 /* Constants.swift in Sources */,
+				E965C4D01D649B5F0078BB96 /* Weather.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -208,7 +247,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E92FA6B31D643AA300520521 /* Sydney_WeatherTests.swift in Sources */,
+				E92FA6B31D643AA300520521 /* Sydney_WeatherRawUrlTests.swift in Sources */,
+				E965C4D91D64AAB50078BB96 /* WeatherApiTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,6 +442,7 @@
 				E92FA6B91D643AA300520521 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E92FA6BA1D643AA300520521 /* Build configuration list for PBXNativeTarget "Sydney WeatherTests" */ = {
 			isa = XCConfigurationList;
@@ -410,6 +451,7 @@
 				E92FA6BC1D643AA300520521 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
