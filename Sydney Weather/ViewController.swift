@@ -26,10 +26,6 @@ class ViewController: UIViewController
         
         hourlyWeatherTableView.delegate = self
         hourlyWeatherTableView.dataSource = self
-        //hourlyWeatherTableView.register(HourlyWeatherTableViewCell.self, forCellReuseIdentifier: Constants.HourlyWeatherTableViewCellIdentifier)
-        //hourlyWeatherTableView.register(nib: UINib(nibName: HourlyWeatherTableViewCell, bundle: nil), forCellReuseIdentifier: Constants.HourlyWeatherTableViewCellIdentifier)
-        let nib = UINib(nibName: "HourlyWeatherTableViewCell", bundle: nil)
-        hourlyWeatherTableView.register(nib, forCellReuseIdentifier: Constants.HourlyWeatherTableViewCellIdentifier)
         
         updateAllWeathers()
     }
@@ -90,8 +86,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource
         if let weather = hourlyWeathers?[indexPath.row]
         {
             let weatherPresenter = WeatherDataPresenter(weather: weather)
-            
-            print("cell : \(cell)")
             cell.summaryLabel.text = weatherPresenter.summary
             cell.temperatureLabel.text = weatherPresenter.temperature
             cell.humidityLabel.text = weatherPresenter.humidity
