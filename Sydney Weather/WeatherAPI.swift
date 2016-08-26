@@ -8,13 +8,6 @@
 
 import Foundation
 
-/*
- 1. Dark Sky API format: https://api.forecast.io/forecast/APIKEY/LATITUDE,LONGITUDE
- 2. example format of Sydney: https://api.forecast.io/forecast/9a678de7904f9c4c671ea43271da7acb/-33.8675,151.207
- 3. Dark Sky API document: https://developer.forecast.io/docs/v2
- 4. The AP keyI is: 9a678de7904f9c4c671ea43271da7acb
-*/
-
 public class WeatherAPI
 {
     static let sharedInstance = WeatherAPI()
@@ -30,7 +23,7 @@ public class WeatherAPI
     // 2. completionHandler(weathers: [Weather(with: weatherDic)], error: nil)
     // TODO: Make CompletionHandler = (with weathers: [Weather]?)
     // TODO: use thoughtbot/Argo or SwiftyJSON/SwiftyJSON later
-    public typealias CompletionHandler = (weathers: [Weather]?, error: Error?) -> Void
+    public typealias CompletionHandler = (_ weathers: [Weather]?, _ error: Error?) -> Void
     
     enum TimingType : Int {
         case current = 0
@@ -57,7 +50,7 @@ public class WeatherAPI
             if error != nil
             {
                 // use closure to clear UI
-                completionHandler(weathers: nil, error: error)
+                completionHandler(nil, error)
                 return
             }
             
@@ -69,16 +62,16 @@ public class WeatherAPI
                 
                 if let weatherDic = dic?[Constants.WeatherAPIKey.currently] as? DicType
                 {
-                    completionHandler(weathers: [Weather(with: weatherDic)], error: nil)
+                    completionHandler([Weather(with: weatherDic)], nil)
                 }
                 else
                 {
-                    completionHandler(weathers: nil, error: NSError(domain: "json", code: 001, userInfo: ["description":"JSONSerialization.jsonObject failed"]))
+                    completionHandler(nil, NSError(domain: "json", code: 001, userInfo: ["description":"JSONSerialization.jsonObject failed"]))
                 }
             }
             catch let error as NSError
             {
-                completionHandler(weathers: nil, error: error)
+                completionHandler(nil, error)
                 return
             }
         }
@@ -92,7 +85,7 @@ public class WeatherAPI
             if error != nil
             {
                 // use closure to clear UI
-                completionHandler(weathers: nil, error: error)
+                completionHandler(nil, error)
                 assertionFailure("! error != nil: \(error)")
                 return
             }
@@ -109,7 +102,7 @@ public class WeatherAPI
                     if let weatherDic = weatherDic as? DicType
                     {
                         let weather = Weather(with: weatherDic)
-                        if weather.date > Date()
+                        if weather.date! > Date()
                         {
                             weathers.append(weather)
                         }
@@ -120,10 +113,10 @@ public class WeatherAPI
                     }
                 })
 
-                completionHandler(weathers: weathers, error: nil)
+                completionHandler(weathers, nil)
             } catch let error as NSError {
                 assertionFailure("error: \(error)")
-                completionHandler(weathers: nil, error: error)
+                completionHandler(nil, error)
             }
         }
         
